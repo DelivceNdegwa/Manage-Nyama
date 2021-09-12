@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "108366608038",
+    "firebase_url": "https://manage-nyama-default-rtdb.firebaseio.com",
+    "project_id": "manage-nyama",
+    "storage_bucket": "manage-nyama.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108366608038:android:06382a10fab22623146667",
+        "android_client_info": {
+          "package_name": "com.example.managenyama"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108366608038-bjq77k1ff58vdb3alddgp6ep1bpldbj0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLPvWMP27Ov5JCFkW0UPQF0MShMqEM0wk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108366608038-bjq77k1ff58vdb3alddgp6ep1bpldbj0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
