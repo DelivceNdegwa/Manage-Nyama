@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">ManageNyama</string>
+    <string name="label_card_stock_home">Stock</string>
+    <string name="label_card_sales_home">Sales</string>
+    <string name="label_card_profile_home">Profile</string>
+    <string name="stock_name">Stock Name</string>
+    <string name="string_colon">:</string>
+    <string name="stock_quantity">10Kg</string>
+    <string name="sales_made">Sales Made</string>
+    <string name="sales_number">0 sales</string>
+    <string name="sale_name">Sale Name</string>
 </resources>
