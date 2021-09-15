@@ -14,4 +14,5 @@
     <color name="red">#E11B0C</color>
     <color name="shade_brown">#fa993e</color>
     <color name="lighter_shade_brown">#ffb169</color>
+    <color name="transparent">#0000ffff</color>
 </resources>

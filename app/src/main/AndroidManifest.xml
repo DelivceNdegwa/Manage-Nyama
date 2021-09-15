@@ -12,13 +12,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ManageNyama">
-
-        <activity android:name=".Profile" android:label="Profile" />
-        <activity android:name=".Sales" android:label="Sales"/>
-        <activity android:name=".Stock" android:label="Stock"/>
-        <activity android:name=".HomeScreen" android:label="Home"/>
-        <activity android:name=".MainActivity">
-
+        <activity android:name=".MuttonStock"></activity>
+        <activity android:name=".FishStock" />
+        <activity android:name=".ChickenStock" />
+        <activity android:name=".PigStock" />
+        <activity android:name=".GoatStock" />
+        <activity android:name=".BeefStock" />
+        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".Profile"
+            android:label="Profile" />
+        <activity
+            android:name=".Sales"
+            android:label="Sales" />
+        <activity
+            android:name=".Stock"
+            android:label="Stock" />
+        <activity
+            android:name=".HomeScreen"
+            android:label="Home" />
+        <activity android:name=".SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

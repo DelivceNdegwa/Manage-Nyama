@@ -45,24 +45,7 @@
             android:textSize="15sp"
             android:textColor="@color/black"
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/string_colon"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            />
-        <TextView
-            android:id="@+id/stock_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/stock_quantity"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            />
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -5,8 +5,45 @@
     <string name="label_card_profile_home">Profile</string>
     <string name="stock_name">Stock Name</string>
     <string name="string_colon">:</string>
-    <string name="stock_quantity">10Kg</string>
+    <string name="stock_quantity">10</string>
     <string name="sales_made">Sales Made</string>
     <string name="sales_number">0 sales</string>
     <string name="sale_name">Sale Name</string>
+    <string name="user_email">Email</string>
+    <string name="user_password">Password</string>
+    <string name="login_button">Login</string>
+    <string name="signup_button">Sign Up</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="butchery_name">Butchery Name</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="stock_unit">KG</string>
+    <string name="beef">Beef</string>
+    <string name="goat">Goat</string>
+    <string name="pork">Pork</string>
+    <string name="mutton">Mutton</string>
+    <string name="chicken">Chicken</string>
+    <string name="fish">Fish</string>
+    <string name="quantity_of_beef">Quantity of Beef=</string>
+    <string name="cost_per_kg">Cost per kg=</string>
+    <string name="quantity_of_goat">Quantity of Goat=</string>
+    <string name="butchery_title">Butchery Title</string>
+    <string name="quantity_of_pig">Quantity of pig=</string>
+    <string name="quantity_of_chicken">Quantity of Chicken=</string>
+    <string name="quantity_of_fish">Quantity of fish=</string>
+    <string name="quantity_of_mutton">Quantity of mutton=</string>
+    <string name="add_stock">ADD STOCK</string>
+    <string name="change_cost">Change cost</string>
+    <string name="update_stock">Add Stock</string>
+    <string name="stock_prompt">Input Amount to add(KG)</string>
+    <string name="type_of_meat">Update Meat Cost</string>
+    <string name="cancel">Cancel</string>
+    <string name="update_cost_in_ksh">Update cost in Ksh</string>
+    <string name="update_cost">Update Cost</string>
+    <string name="update_meat_stock">Update meat stock</string>
+    <string name="stock_amount">Stock amount</string>
+    <string name="add_sale">Add Sale</string>
+    <string name="your_meat_inventory_organizer">Your meat inventory organizer</string>
+    <string name="manage_nyama">Manage Nyama</string>
 </resources>

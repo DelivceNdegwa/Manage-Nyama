@@ -1,15 +1,19 @@
 package com.example.managenyama;
 
 public class StockModel {
-    String stockName, stockQuantity, stockPrice;
+    String stockName;
+    String stockQuantity;
+    String stockPrice;
+    String butcheryName;
     public StockModel(){
 
     }
 
-    public StockModel(String stockName, String stockQuantity, String stockPrice){
+    public StockModel(String stockName, String stockQuantity, String stockPrice, String butcheryName){
         this.stockName = stockName;
         this.stockQuantity = stockQuantity;
         this.stockPrice = stockPrice;
+        this.butcheryName = butcheryName;
     }
 
     public String getStockName() {
@@ -35,4 +39,8 @@ public class StockModel {
     public void setStockPrice(String stockPrice) {
         this.stockPrice = stockPrice;
     }
+
+    public String getButcheryName() { return butcheryName; }
+
+    public void setButcheryName(String butcheryName) { this.butcheryName = butcheryName; }
 }

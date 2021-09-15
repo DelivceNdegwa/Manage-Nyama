@@ -5,10 +5,9 @@ public class StockCardModel {
     int  stockImage;
 
 
-    public StockCardModel(String stockName, int stockImage, String stockQuantity) {
+    public StockCardModel(String stockName, int stockImage) {
         this.stockName = stockName;
         this.stockImage = stockImage;
-        this.stockQuantity = stockQuantity;
 
     }
 

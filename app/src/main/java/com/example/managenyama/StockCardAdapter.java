@@ -31,10 +31,10 @@ public class StockCardAdapter extends ArrayAdapter<StockCardModel> {
         StockCardModel stockCardModel = getItem(position);
         TextView stockName = listitemView.findViewById(R.id.stock_name);
         ImageView stockImage = listitemView.findViewById(R.id.stock_image);
-        TextView stockAmount = listitemView.findViewById(R.id.stock_amount);
+//        TextView stockAmount = listitemView.findViewById(R.id.stock_amount);
         stockName.setText(stockCardModel.getStockName());
         stockImage.setImageResource(stockCardModel.getStockImage());
-        stockAmount.setText(stockCardModel.getStockQuantity());
+//        stockAmount.setText(stockCardModel.getStockQuantity());
         return listitemView;
     }
 }
