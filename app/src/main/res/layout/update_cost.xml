@@ -55,7 +55,7 @@
                 android:text="@string/cancel"
                 android:backgroundTint="@color/shade_brown"
                 android:textColor="@color/black"
-                android:paddingHorizontal="5dp"
+
                 />
 
             <android.widget.Button

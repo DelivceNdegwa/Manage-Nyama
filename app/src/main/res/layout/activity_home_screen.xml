@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,131 +8,275 @@
     android:gravity="center"
     tools:context=".HomeScreen">
 
-    <ScrollView
+    <!--
+    ATRRTIBUTES OF GRID LAYOUT
+
+    1. columnCount
+    2. rowCount
+    3. horizontalSpacing
+    4. verticalSpacing
+    -->
+
+    <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:rowCount="2"
+        android:padding="10dp"
+        android:alignmentMode="alignMargins"
+        android:columnOrderPreserved="true"
+        >
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="125dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="@color/shade_brown"
             android:padding="10dp"
-
+            app:cardElevation="10dp"
+            android:id="@+id/stock_id"
             >
-
-            <com.google.android.material.card.MaterialCardView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="10dp"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/shade_brown"
-                android:padding="10dp"
-                app:cardElevation="10dp"
-                android:id="@+id/stock_id"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 >
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="@string/label_card_stock_home"
-                        android:textSize="25sp"
-                        android:padding="10dp"
-                        android:textColor="@color/black"
-                        />
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="@string/label_card_stock_home"
+                    android:textSize="25sp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    />
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="125dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="@color/shade_brown"
+            android:padding="10dp"
+            app:cardElevation="10dp"
+            android:id="@+id/sale_id"
+            >
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/shade_brown"
-                android:padding="10dp"
-                app:cardElevation="10dp"
-                android:id="@+id/sale_id"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 >
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="@string/label_card_sales_home"
-                        android:textSize="25sp"
-                        android:padding="10dp"
-                        android:textColor="@color/black"
-                        />
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="@string/label_card_sales_home"
+                    android:textSize="25sp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    />
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="125dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="@color/shade_brown"
+            android:padding="10dp"
+            app:cardElevation="10dp"
+            android:id="@+id/profile_id"
+            >
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/shade_brown"
-                android:padding="10dp"
-                app:cardElevation="10dp"
-                android:id="@+id/profile_id"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 >
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="@string/label_card_profile_home"
-                        android:textSize="25sp"
-                        android:padding="10dp"
-                        android:textColor="@color/black"
-                        />
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="@string/label_card_profile_home"
+                    android:textSize="25sp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    />
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="125dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+
+            android:layout_margin="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="@color/shade_brown"
+            android:padding="10dp"
+            app:cardElevation="10dp"
+            android:id="@+id/report_id"
+            >
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginTop="20dp"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/shade_brown"
-                android:padding="10dp"
-                app:cardElevation="10dp"
-                android:id="@+id/report_id"
+                android:layout_height="match_parent"
+                android:gravity="center"
                 >
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    >
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:text="Reports"
-                        android:textSize="25sp"
-                        android:padding="10dp"
-                        android:textColor="@color/black"
-                        />
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Reports"
+                    android:textSize="25sp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    />
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        </LinearLayout>
+    </GridLayout>
 
-    </ScrollView>
 
-</LinearLayout>
+</RelativeLayout>
+
+<!--
+<ScrollView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="10dp"
+
+              >
+
+              <com.google.android.material.card.MaterialCardView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+
+                  android:layout_marginTop="10dp"
+                  app:cardCornerRadius="10dp"
+                  app:cardBackgroundColor="@color/shade_brown"
+                  android:padding="10dp"
+                  app:cardElevation="10dp"
+                  android:id="@+id/stock_id"
+                  >
+                  <RelativeLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:gravity="center"
+                      >
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textStyle="bold"
+                          android:text="@string/label_card_stock_home"
+                          android:textSize="25sp"
+                          android:padding="10dp"
+                          android:textColor="@color/black"
+                          />
+                  </RelativeLayout>
+              </com.google.android.material.card.MaterialCardView>
+
+              <com.google.android.material.card.MaterialCardView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+
+                  android:layout_margin="10dp"
+                  app:cardCornerRadius="10dp"
+                  app:cardBackgroundColor="@color/shade_brown"
+                  android:padding="10dp"
+                  app:cardElevation="10dp"
+                  android:id="@+id/sale_id"
+                  >
+                  <RelativeLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:gravity="center"
+                      >
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textStyle="bold"
+                          android:text="@string/label_card_sales_home"
+                          android:textSize="25sp"
+                          android:padding="10dp"
+                          android:textColor="@color/black"
+                          />
+                  </RelativeLayout>
+              </com.google.android.material.card.MaterialCardView>
+
+              <com.google.android.material.card.MaterialCardView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+
+                  android:layout_margin="10dp"
+                  app:cardCornerRadius="10dp"
+                  app:cardBackgroundColor="@color/shade_brown"
+                  android:padding="10dp"
+                  app:cardElevation="10dp"
+                  android:id="@+id/profile_id"
+                  >
+                  <RelativeLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:gravity="center"
+                      >
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textStyle="bold"
+                          android:text="@string/label_card_profile_home"
+                          android:textSize="25sp"
+                          android:padding="10dp"
+                          android:textColor="@color/black"
+                          />
+                  </RelativeLayout>
+              </com.google.android.material.card.MaterialCardView>
+
+              <com.google.android.material.card.MaterialCardView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+
+                  android:layout_margin="10dp"
+                  app:cardCornerRadius="10dp"
+                  app:cardBackgroundColor="@color/shade_brown"
+                  android:padding="10dp"
+                  app:cardElevation="10dp"
+                  android:id="@+id/report_id"
+                  >
+                  <RelativeLayout
+                      android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:gravity="center"
+                      >
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:textStyle="bold"
+                          android:text="Reports"
+                          android:textSize="25sp"
+                          android:padding="10dp"
+                          android:textColor="@color/black"
+                          />
+                  </RelativeLayout>
+              </com.google.android.material.card.MaterialCardView>
+
+          </LinearLayout>
+
+</ScrollView>-->
