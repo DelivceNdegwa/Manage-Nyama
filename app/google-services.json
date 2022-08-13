@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1056991052620",
+    "project_id": "managenyama",
+    "storage_bucket": "managenyama.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056991052620:android:1bf791bdf9f25e0ca8c5e9",
+        "android_client_info": {
+          "package_name": "com.delivce.managenyama"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1056991052620-pq1a4m497huhu1vqsugdnnefl2gt7iqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsx48ToAcv2H2nSYCcPvHTbrPKPp2uDmY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1056991052620-pq1a4m497huhu1vqsugdnnefl2gt7iqg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
