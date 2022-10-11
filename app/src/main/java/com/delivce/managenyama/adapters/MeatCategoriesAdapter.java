@@ -1,23 +1,26 @@
 package com.delivce.managenyama.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.delivce.managenyama.R;
 
+import java.util.List;
 import java.util.Map;
 
 public class MeatCategoriesAdapter extends RecyclerView.Adapter<MeatCategoriesAdapter.ViewHolder> {
-    Context context;
-    Map<String, Object> categories;
+        Context context;
+        List<Map<String, Object>> categories;
 
-    public MeatCategoriesAdapter(Context context, Map<String, Object> categories) {
+    public MeatCategoriesAdapter(Context context, List<Map<String, Object>> categories) {
         this.context = context;
         this.categories = categories;
     }
@@ -31,6 +34,11 @@ public class MeatCategoriesAdapter extends RecyclerView.Adapter<MeatCategoriesAd
 
     @Override
     public void onBindViewHolder(@NonNull MeatCategoriesAdapter.ViewHolder holder, int position) {
+        Map<String, Object> categoryItem = categories.get(position);
+        holder.categoryName = String.valueOf(categoryItem.get("name"));
+        Log.d("MAP_CATEGORY_NAME", holder.categoryName);
+        holder.categoryPrice = String.valueOf(categoryItem.get("default_price"));
+        holder.tvCategoryName.setText(holder.categoryName);
 
     }
 
@@ -40,8 +48,12 @@ public class MeatCategoriesAdapter extends RecyclerView.Adapter<MeatCategoriesAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvCategoryName;
+        String categoryPrice, categoryName;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            tvCategoryName = itemView.findViewById(R.id.tv_item_category_name);
         }
     }
 }
