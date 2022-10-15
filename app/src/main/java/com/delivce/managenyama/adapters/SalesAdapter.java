@@ -36,7 +36,7 @@ public class SalesAdapter extends RecyclerView.Adapter<SalesAdapter.ViewHolder> 
         Map<String, Object> sale = sales.get(position);
 
         holder.saleCategory.setText(String.valueOf(sale.get("category")));
-        holder.saleQuantity.setText(String.valueOf(sale.get("quantity")));
+        holder.saleQuantity.setText(String.valueOf(sale.get("quantity"))+ "kg");
         holder.saleTime.setText(String.valueOf(sale.get("time")));
     }
 

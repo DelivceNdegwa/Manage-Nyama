@@ -21,12 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.delivce.managenyama.adapters.HistoryAdapter;
 import com.delivce.managenyama.adapters.SalesAdapter;
-import com.delivce.managenyama.adapters.SuppliersAdapter;
 import com.delivce.managenyama.databinding.FragmentDashboardBinding;
+import com.delivce.managenyama.history.HistoryActivity;
 import com.delivce.managenyama.models.History;
-import com.delivce.managenyama.popups.CategoryPopUp;
 import com.delivce.managenyama.popups.SalesPopUp;
+import com.delivce.managenyama.stock.StockActivity;
 import com.delivce.managenyama.suppliers.SuppliersActivity;
+import com.delivce.managenyama.utils.DateTimeToday;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -44,7 +45,7 @@ public class DashboardFragment extends Fragment {
     // views
     private RecyclerView historyRV;
 
-    public final String categoryCollection = "meat_sales";
+    public final String salesCollection = "meat_sales";
     List<Map<String, Object>> sales = new ArrayList<>();
 
     //lists
@@ -76,12 +77,30 @@ public class DashboardFragment extends Fragment {
         historyRV.setNestedScrollingEnabled(true);
         historyRV.setLayoutManager(new LinearLayoutManager(root.getContext(), LinearLayoutManager.VERTICAL, false));
 
+        historyLayout = binding.ivHistory;
         suppliersLayout = binding.ivSuppliers;
+        stockLayout = binding.ivStock;
 
         suppliersLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(requireActivity(), SuppliersActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        stockLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), StockActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        historyLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(requireActivity(), HistoryActivity.class);
                 startActivity(intent);
             }
         });
@@ -94,20 +113,22 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        historyList.add(new History(4, "You have made a new sale"));
-        historyList.add(new History(4, "You have made a new sale"));
-        historyList.add(new History(4, "You have made a new sale"));
-        historyList.add(new History(4, "You have made a new sale"));
-        historyList.add(new History(4, "You have made a new sale"));
-        historyList.add(new History(4, "You have made a new sale"));
-        historyList.add(new History(4, "You have made a new sale"));
-        historyList.add(new History(4, "You have made a new sale"));
-        historyList.add(new History(4, "You have made a new sale"));
-        historyList.add(new History(4, "You have made a new sale"));
 
-        historyAdapter = new HistoryAdapter(requireActivity(), historyList);
-
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+//
+//        historyList.add(new History(4, "You have made a new sale"));
+//        historyList.add(new History(4, "You have made a new sale"));
+//        historyList.add(new History(4, "You have made a new sale"));
+//        historyList.add(new History(4, "You have made a new sale"));
+//        historyList.add(new History(4, "You have made a new sale"));
+//        historyList.add(new History(4, "You have made a new sale"));
+//        historyList.add(new History(4, "You have made a new sale"));
+//        historyList.add(new History(4, "You have made a new sale"));
+//        historyList.add(new History(4, "You have made a new sale"));
+//        historyList.add(new History(4, "You have made a new sale"));
+//
+//        historyAdapter = new HistoryAdapter(requireActivity(), historyList);
+//
+//        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
 
 
@@ -118,11 +139,11 @@ public class DashboardFragment extends Fragment {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
         dialog = ProgressDialog.show(requireActivity(), "",
-                "Fetching suppliers. Please wait...", true);
+                "Fetching history. Please wait...", true);
         dialog.show();
 
         sales.clear();
-        fetchSuppliers();
+        fetchSales();
     }
     @Override
     public void onStop() {
@@ -136,10 +157,14 @@ public class DashboardFragment extends Fragment {
         binding = null;
     }
 
-    private void fetchSuppliers() {
+    private void fetchSales() {
+        DateTimeToday dateTimeToday = new DateTimeToday();
+        String strDate = dateTimeToday.getDateTimeToday();
+
         db = FirebaseFirestore.getInstance();
-        Log.d("FETCH_CATEGORY_SUCCESS", String.valueOf(db.collection(categoryCollection)));
-        db.collection(categoryCollection)
+        Log.d("FETCH_CATEGORY_SUCCESS", String.valueOf(db.collection(salesCollection)));
+        db.collection(salesCollection)
+                .whereEqualTo("time", strDate)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -150,7 +175,7 @@ public class DashboardFragment extends Fragment {
                                 Log.d("FETCH_CATEGORY_SUCCESS", document.getId() + " => " + document.getData());
                                 sales.add(document.getData());
                             }
-                            Log.d("CATEGORIES_LIST", String.valueOf(sales));
+                            Log.d("SALES_LIST", String.valueOf(sales));
 
                             salesAdapter = new SalesAdapter(requireActivity(), sales);
                             LinearLayoutManager layoutManager=new LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false);

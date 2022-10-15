@@ -26,7 +26,7 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
     @NonNull
     @Override
     public StockAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_category, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_stock, parent, false);
         return new StockAdapter.ViewHolder(view);
     }
 
@@ -34,8 +34,8 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
     public void onBindViewHolder(@NonNull StockAdapter.ViewHolder holder, int position) {
         Map<String, Object> stock = stocks.get(position);
 
-        holder.tvStockQuantity.setText(String.valueOf(stock.get("quantity")));
-        holder.tvStockName.setText(String.valueOf(stock.get("name")));
+        holder.tvStockQuantity.setText(String.valueOf(stock.get("quantity"))+" kg");
+        holder.tvStockName.setText(String.valueOf(stock.get("category")));
     }
 
     @Override

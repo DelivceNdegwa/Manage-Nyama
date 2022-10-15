@@ -10,15 +10,14 @@
     <TextView
         android:id="@+id/text_dashboard"
         style="@style/TextAppearance.AppCompat.Body1"
-        android:fontFamily="sans-serif-condensed"
-        android:textStyle="bold"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Hello, John!"
+        android:fontFamily="sans-serif-condensed"
         android:textAlignment="textStart"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,12 +27,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_dashboard">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -41,7 +40,6 @@
             android:background="@color/black">
 
             <TextView
-                android:fontFamily="sans-serif-condensed"
                 android:id="@+id/tv_sales_number"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="0dp"
@@ -50,7 +48,8 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
-                android:text="20 Sales made today"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Welcome back!"
                 android:textColor="@color/cream"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -76,9 +75,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toStartOf="@+id/layout_sales"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/layout_history"
         app:layout_constraintTop_toBottomOf="@+id/cv_sales_banner">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,29 +84,28 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
 
+            android:background="@drawable/card_background_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/card_background_layout"
-            >
+            app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_margin="5dp"
                 android:src="@drawable/ic_stock"
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:fontFamily="sans-serif-condensed"
             android:id="@+id/tv_stock_icon"
             style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
             android:text="Stock"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
@@ -120,46 +117,44 @@
         android:id="@+id/layout_sales"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@+id/layout_suppliers"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/layout_stock_quantity"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_sales_banner">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/iv_sales"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:background="@drawable/card_background_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/card_background_layout"
-            >
+            app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_baseline_attach_money_24"
-                app:srcCompat="@drawable/ic_baseline_attach_money_24"
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_attach_money_24" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <TextView
-            android:fontFamily="sans-serif-condensed"
             android:id="@+id/tv_sales_icon"
             style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
             android:text="Sales"
+            android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_sales"
-            android:textAlignment="center" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_sales" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -214,8 +209,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/layout_stock_quantity"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/layout_suppliers"
         app:layout_constraintTop_toBottomOf="@+id/cv_sales_banner">
@@ -224,30 +218,29 @@
             android:id="@+id/iv_history"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:background="@drawable/card_background_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/card_background_layout"
-            >
+            app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_history"
-                app:srcCompat="@drawable/ic_history"
-                />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_history" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <TextView
-            android:fontFamily="sans-serif-condensed"
             android:id="@+id/tv_history_icon"
             style="@style/TextAppearance.AppCompat.Body1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
             android:text="History"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
@@ -266,7 +259,7 @@
         android:fontFamily="sans-serif-black"
         android:text="Today's History"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_stock_quantity" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_sales" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_history"
