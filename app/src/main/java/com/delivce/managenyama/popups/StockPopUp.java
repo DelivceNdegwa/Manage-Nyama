@@ -17,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.delivce.managenyama.R;
+import com.delivce.managenyama.utils.CommonVariables;
+import com.delivce.managenyama.utils.DateTimeToday;
 import com.delivce.managenyama.utils.MyDialogs;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -38,6 +40,8 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
     FirebaseFirestore db;
     Context context;
 
+    CommonVariables common = new CommonVariables();
+
     public final String categoryCollection = "meat_categories";
     public final String suppliersCollection = "meat_suppliers";
     public final String stockCollection = "meat_stock";
@@ -48,6 +52,8 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
     Spinner categoriesSpinner, suppliersSpinner;
     ArrayList<String> categoryNames = new ArrayList<>();
     ArrayList<String> supplierNames = new ArrayList<>();
+
+    DateTimeToday dateTimeToday = new DateTimeToday();
 
 
     String selectedCategory, selectedSupplier;
@@ -79,6 +85,7 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
         //Initialize the elements of our window, install the handler
 
         TextInputEditText stockQuantity = popupView.findViewById(R.id.input_stock_quantity);
+        TextInputEditText stockPrice = popupView.findViewById(R.id.et_purchase_cost);
         suppliersSpinner = popupView.findViewById(R.id.spinner_stock_supplier);
         categoriesSpinner = popupView.findViewById(R.id.stock_category_spinner);
 
@@ -94,7 +101,11 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
             @Override
             public void onClick(View v) {
                 try {
-                    addNewStock(Float.parseFloat(stockQuantity.getText().toString()), categoriesSpinner.getSelectedItem().toString(), suppliersSpinner.getSelectedItem().toString());
+                    addNewStock(
+                            Float.parseFloat(stockQuantity.getText().toString()),
+                            categoriesSpinner.getSelectedItem().toString(),
+                            suppliersSpinner.getSelectedItem().toString(),
+                            stockPrice.getText().toString());
                     popupWindow.dismiss();
                 }
                 catch (Exception e){
@@ -116,12 +127,13 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
         });
     }
 
-    private void addNewStock(float quantity, String category, String supplier) {
+    private void addNewStock(float quantity, String category, String supplier, String stockPrice) {
         Map<String, Object> newStock = new HashMap<>();
 
         newStock.put("quantity", quantity);
         newStock.put("category", category);
         newStock.put("supplier", supplier);
+
 
         MyDialogs dialog = new MyDialogs(context);
         DocumentReference documentReference= db.collection(stockCollection).document(category);
@@ -131,10 +143,16 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot documentSnapshot = task.getResult();
                 String successMsg = "Stock has been added successfully";
+
+                String time = dateTimeToday.getDateTimeToday();
+                String date = dateTimeToday.getDateToday();
+
                 if(documentSnapshot.exists()){
                     double stockQuantity  = documentSnapshot.getDouble("quantity");
                     double newQuantity = stockQuantity+(double) quantity;
                     documentReference.update("quantity", newQuantity);
+
+                    addNewStockMonitor(quantity, category, time, date, stockPrice);
                     dialog.createSuccessDialog(successMsg);
                 }
                 else{
@@ -144,6 +162,8 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d("CATEGORY_SUCCESS", successMsg + " with ID: " + documentReference.getId());
+
+                                    addNewStockMonitor(quantity, category, time, date, stockPrice);
                                     dialog.createSuccessDialog(successMsg);
                                 }
                             })
@@ -159,27 +179,76 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
                 }
             }
         });
-
-//        db.collection(categoryCollection)
-//                .add(newStock)
-//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//                        String successMsg = "Stock has been added successfully";
-//                        Log.d("CATEGORY_SUCCESS", successMsg + " with ID: " + documentReference.getId());
-////                        createSuccessDialog(successMsg);
-//                        dialog.createSuccessDialog(successMsg);
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        String failureMsg = "Error adding stock";
-//                        Log.w("CATEGORY_ERROR", failureMsg, e);
-//
-//                        dialog.createFailureDialog(failureMsg);
-//                    }
-//                });
     }
+
+
+    private void addNewStockMonitor(float quantity, String category, String time, String date, String stockPrice) {
+        Log.d("TEST_STOCK_INSTANCE", "Called");
+        Map<String, Object> newStock = new HashMap<>();
+
+        newStock.put("category", category);
+        newStock.put("stock_price", stockPrice);
+//        newStock.put("status", common.STOCK_MONITOR_PENDING);
+        newStock.put("stock_quantity", quantity);
+        newStock.put("sale_quantity", common.STOCK_MONITOR_DEFAULT_SALE_QUANTITY);
+        newStock.put("accumulated_sale_price", common.STOCK_MONITOR_DEFAULT_SALE_CUMMULATIVE_PRICE);
+        newStock.put("date", date);
+        newStock.put("time", time);
+
+        db.collection(common.STOCK_MONITOR_COLLECTION)
+                        .whereEqualTo("category", category)
+                        .whereEqualTo("status", common.STOCK_MONITOR_ACTIVE)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    QuerySnapshot querySnapshot = task.getResult();
+                                    if(querySnapshot.isEmpty()){
+                                        newStock.put("status", common.STOCK_MONITOR_ACTIVE);
+                                    }
+                                    else{
+                                        newStock.put("status", common.STOCK_MONITOR_PENDING);
+                                    }
+                                    addNewCollection(newStock);
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("STOCK_MONITOR_ERROR", e.getMessage());
+                            }
+                        });
+
+
+
+
+    }
+
+    private void addNewCollection(Map<String, Object> newStock) {
+        db.collection(common.STOCK_MONITOR_COLLECTION)
+                .add(newStock)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        String successMsg = "Stock instance has been added successfully";
+                        Log.d("STOCK_INSTANCE_SUCCESS", successMsg + " with ID: " + documentReference.getId());
+//                        createSuccessDialog(successMsg);
+//                        dialog.createSuccessDialog(successMsg);
+                        Toast.makeText(context, successMsg, Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        String failureMsg = "Error adding sale";
+                        Log.w("CATEGORY_ERROR", failureMsg, e);
+
+//                        dialog.createFailureDialog(failureMsg);
+                        Toast.makeText(context, failureMsg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

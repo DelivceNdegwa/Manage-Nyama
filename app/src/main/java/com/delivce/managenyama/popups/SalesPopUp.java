@@ -15,10 +15,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.delivce.managenyama.R;
-import com.delivce.managenyama.adapters.MeatCategoriesAdapter;
+import com.delivce.managenyama.utils.CommonVariables;
 import com.delivce.managenyama.utils.DateTimeToday;
 import com.delivce.managenyama.utils.MyDialogs;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,9 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,11 +40,15 @@ public class SalesPopUp implements AdapterView.OnItemSelectedListener {
     FirebaseFirestore db;
     Context context;
 
-    public final String categoryCollection = "meat_sales";
+    public final String saleCollection = "meat_sales";
     public final String collectionCategory= "meat_categories";
     public final String suppliersCollection = "meat_suppliers";
     public final String stockCollection = "meat_stock";
     public boolean stockUpdated = false;
+
+    float categoryPrice = 0;
+
+    CommonVariables common = new CommonVariables();
 
     List<Map<String, Object>> categories = new ArrayList<>();
     List<Map<String, Object>> suppliers = new ArrayList<>();
@@ -100,8 +101,11 @@ public class SalesPopUp implements AdapterView.OnItemSelectedListener {
             public void onClick(View v) {
                 try {
                     quantitySale = Float.parseFloat(saleQuantity.getText().toString());
+                    String categoryName = categoriesSpinner.getSelectedItem().toString();
 
-                    updateStock(categoriesSpinner.getSelectedItem().toString(), quantitySale);
+                    float salePrice = getSetCategoryPrice(categoryName);
+
+                    updateStock(categoryName, quantitySale, salePrice);
 
                     popupWindow.dismiss();
                 }
@@ -124,7 +128,23 @@ public class SalesPopUp implements AdapterView.OnItemSelectedListener {
         });
     }
 
-    private void updateStock(String category, float quantity) {
+    private float getSetCategoryPrice(String categoryName) {
+
+        db.collection(common.CATEGORY_COLLECTION).whereEqualTo("name", categoryName)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0);
+
+                        categoryPrice = (float) documentSnapshot.get("default_price");
+                    }
+                });
+        return categoryPrice;
+    }
+
+    private void updateStock(String category, float quantity, float salePrice) {
 
         DocumentReference documentReference= db.collection(stockCollection).document(category);
 
@@ -145,9 +165,10 @@ public class SalesPopUp implements AdapterView.OnItemSelectedListener {
                             documentReference.update("quantity", stockQuantity-(double) quantity);
 
                             DateTimeToday dateTimeToday = new DateTimeToday();
-                            String strDate = dateTimeToday.getDateTimeToday();
+                            String strTime = dateTimeToday.getDateTimeToday();
+                            String strDate = dateTimeToday.getDateToday();
 
-                            addNewSale(quantity, category, strDate);
+                            addNewSale(quantity, category, strTime, strDate, salePrice);
                         }
                         catch (Exception e){
                             Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
@@ -178,14 +199,15 @@ public class SalesPopUp implements AdapterView.OnItemSelectedListener {
 //                });
     }
 
-    private void addNewSale(float quantity, String category, String time) {
+    private void addNewSale(float quantity, String category, String time, String date, float salePrice) {
         Map<String, Object> newStock = new HashMap<>();
 
         newStock.put("quantity", quantity);
         newStock.put("category", category);
         newStock.put("time", time);
+        newStock.put("date", date);
 
-        db.collection(categoryCollection)
+        db.collection(saleCollection)
                 .add(newStock)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -194,6 +216,9 @@ public class SalesPopUp implements AdapterView.OnItemSelectedListener {
                         Log.d("CATEGORY_SUCCESS", successMsg + " with ID: " + documentReference.getId());
 //                        createSuccessDialog(successMsg);
 //                        dialog.createSuccessDialog(successMsg);
+
+                        updateStockMonitor(category ,quantity, salePrice);
+
                         Toast.makeText(context, successMsg, Toast.LENGTH_SHORT).show();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -209,8 +234,58 @@ public class SalesPopUp implements AdapterView.OnItemSelectedListener {
 
     }
 
+    private void updateStockMonitor(String category, float quantity, float salePrice) {
+        db.collection(common.STOCK_MONITOR_COLLECTION)
+                .whereEqualTo("category", category)
+                .whereEqualTo("status", common.STOCK_MONITOR_ACTIVE)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                       List<DocumentSnapshot> queryDocumentSnapshot = task.getResult().getDocuments();
+
+                       for(DocumentSnapshot documentSnapshot: queryDocumentSnapshot){
+                           long currentQuantity = documentSnapshot.getLong("sale_quantity");
+                           long stockQuantity = documentSnapshot.getLong("stock_quantity");
+                           long cummulativeSalePrice = documentSnapshot.getLong("accumulated_sale_price");
+                           updateStockMonitorDocument(documentSnapshot.getId(), stockQuantity, currentQuantity, (long) quantity, cummulativeSalePrice, (long) salePrice);
+                       }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+
+                    }
+                });
+    }
+
+    private void updateStockMonitorDocument(String id, long stockQuantity, long currentQuantity, long quantity, long cummulativeSalePrice, long salePrice) {
+        long newQuantity = currentQuantity+quantity;
+        long newCummulativeSalePrice = cummulativeSalePrice+salePrice;
+
+        if((stockQuantity - newQuantity) > 0){
+            db.collection(common.STOCK_MONITOR_COLLECTION)
+                    .document(id)
+                    .update(
+                            "accumulated_sale_price", newCummulativeSalePrice,
+                            "sale_quantity", newQuantity);
+
+        }
+        else{
+            db.collection(common.STOCK_MONITOR_COLLECTION)
+                    .document(id)
+                    .update(
+                            "accumulated_sale_price", newCummulativeSalePrice,
+                            "sale_quantity", newQuantity,
+                            "status", common.STOCK_MONITOR_DEPLETED
+                            );
+        }
+    }
+
+
     public void fetchCategories(){
-        Log.d("FETCH_CATEGORY_SUCCESS", String.valueOf(db.collection(categoryCollection)));
+        Log.d("FETCH_CATEGORY_SUCCESS", String.valueOf(db.collection(saleCollection)));
         db.collection(collectionCategory)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

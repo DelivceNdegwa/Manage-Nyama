@@ -159,12 +159,12 @@ public class DashboardFragment extends Fragment {
 
     private void fetchSales() {
         DateTimeToday dateTimeToday = new DateTimeToday();
-        String strDate = dateTimeToday.getDateTimeToday();
+        String strDate = dateTimeToday.getDateToday();
 
         db = FirebaseFirestore.getInstance();
         Log.d("FETCH_CATEGORY_SUCCESS", String.valueOf(db.collection(salesCollection)));
         db.collection(salesCollection)
-                .whereEqualTo("time", strDate)
+                .whereEqualTo("date", strDate)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
