@@ -56,7 +56,7 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
     DateTimeToday dateTimeToday = new DateTimeToday();
 
 
-    String selectedCategory, selectedSupplier;
+    String selectedCategory, selectedSupplier, stockMinimumValue;
 
     public StockPopUp(FirebaseFirestore db, Context context) {
         this.db = db;
@@ -78,6 +78,8 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
 
         //Create a window with our parameters
         final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+        String stockMinimumLimit;
 
         //Set the location of the window on the screen
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
@@ -127,6 +129,26 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
         });
     }
 
+    private void fetchCurrentCategory(String category) {
+        db.collection(categoryCollection)
+                .whereEqualTo("name", category)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            QuerySnapshot querySnapshot = task.getResult();
+
+                            for(QueryDocumentSnapshot queryDocumentSnapshot: querySnapshot){
+                                stockMinimumValue = (String) queryDocumentSnapshot.get("stock_minimum_limit");
+                            }
+                        }
+
+                    }
+                });
+
+    }
+
     private void addNewStock(float quantity, String category, String supplier, String stockPrice) {
         Map<String, Object> newStock = new HashMap<>();
 
@@ -137,6 +159,8 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
 
         MyDialogs dialog = new MyDialogs(context);
         DocumentReference documentReference= db.collection(stockCollection).document(category);
+
+        fetchCurrentCategory(category);
 
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -151,11 +175,13 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
                     double stockQuantity  = documentSnapshot.getDouble("quantity");
                     double newQuantity = stockQuantity+(double) quantity;
                     documentReference.update("quantity", newQuantity);
+                    documentReference.update("stock_minimum_limit", stockMinimumValue);
 
                     addNewStockMonitor(quantity, category, time, date, stockPrice);
                     dialog.createSuccessDialog(successMsg);
                 }
                 else{
+                    newStock.put("stock_minimum_limit", Float.parseFloat(stockMinimumValue));
                     db.collection(stockCollection).document(category)
                             .set(newStock)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {

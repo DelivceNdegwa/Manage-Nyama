@@ -57,13 +57,19 @@ public class CategoryPopUp {
 
         TextInputEditText categoryName = popupView.findViewById(R.id.input_category_name);
         TextInputEditText categoryPrice = popupView.findViewById(R.id.input_category_price);
+        TextInputEditText etMinimumStockAmount = popupView.findViewById(R.id.input_stock_minimum_limit);
         Button btnCreateCategory = popupView.findViewById(R.id.btn_create_category);
 
         btnCreateCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    addNewCategory(categoryName.getText().toString(), Float.parseFloat(categoryPrice.getText().toString()), 13);
+                    addNewCategory(
+                            categoryName.getText().toString(),
+                            Float.parseFloat(categoryPrice.getText().toString()),
+                            13,
+                            Double.parseDouble(etMinimumStockAmount.getText().toString())
+                    );
                     popupWindow.dismiss();
                 }
                 catch (Exception e){
@@ -85,11 +91,12 @@ public class CategoryPopUp {
         });
     }
 
-    private void addNewCategory(String name, float defaultPrice, long ownerId) {
+    private void addNewCategory(String name, float defaultPrice, long ownerId, double stockLimit) {
         Map<String, Object> newCategory = new HashMap<>();
         newCategory.put("name", name);
         newCategory.put("default_price", defaultPrice);
         newCategory.put("owner_id", ownerId);
+        newCategory.put("stock_minimum_limit", stockLimit);
 
         MyDialogs dialog = new MyDialogs(context);
 
