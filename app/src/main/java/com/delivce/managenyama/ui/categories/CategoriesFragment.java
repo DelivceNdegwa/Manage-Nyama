@@ -149,7 +149,7 @@ public class CategoriesFragment extends Fragment {
                            }
                            Log.d("CATEGORIES_LIST", String.valueOf(categories));
 
-                           meatCategoriesAdapter = new MeatCategoriesAdapter(requireActivity(), categories);
+                           meatCategoriesAdapter = new MeatCategoriesAdapter(getActivity(), categories);
                            GridLayoutManager layoutManager=new GridLayoutManager(requireActivity(),2);
 
                            categoriesRv.setLayoutManager(layoutManager);

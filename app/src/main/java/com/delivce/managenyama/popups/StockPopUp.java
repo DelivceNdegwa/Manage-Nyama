@@ -140,7 +140,8 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
                             QuerySnapshot querySnapshot = task.getResult();
 
                             for(QueryDocumentSnapshot queryDocumentSnapshot: querySnapshot){
-                                stockMinimumValue = (String) queryDocumentSnapshot.get("stock_minimum_limit");
+                                stockMinimumValue = String.valueOf(queryDocumentSnapshot.get("stock_minimum_limit"));
+                                break;
                             }
                         }
 
@@ -181,7 +182,7 @@ public class StockPopUp implements AdapterView.OnItemSelectedListener {
                     dialog.createSuccessDialog(successMsg);
                 }
                 else{
-                    newStock.put("stock_minimum_limit", Float.parseFloat(stockMinimumValue));
+                    newStock.put("stock_minimum_limit", stockMinimumValue);
                     db.collection(stockCollection).document(category)
                             .set(newStock)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {

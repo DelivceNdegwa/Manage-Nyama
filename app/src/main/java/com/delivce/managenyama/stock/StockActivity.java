@@ -75,7 +75,7 @@ public class StockActivity extends AppCompatActivity {
         super.onResume();
 
         dialog = ProgressDialog.show(StockActivity.this, "",
-                "Fetching suppliers. Please wait...", true);
+                "Fetching stock. Please wait...", true);
         dialog.show();
 
         stocks.clear();

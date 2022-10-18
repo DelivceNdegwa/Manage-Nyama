@@ -1,6 +1,7 @@
 package com.delivce.managenyama.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.delivce.managenyama.R;
+import com.delivce.managenyama.ui.categories.CategoryDetailsActivity;
 
 import java.util.List;
 import java.util.Map;
@@ -51,6 +53,15 @@ public class StockAdapter extends RecyclerView.Adapter<StockAdapter.ViewHolder> 
 
             tvStockName = itemView.findViewById(R.id.tv_item_stock_name);
             tvStockQuantity = itemView.findViewById(R.id.tv_stock_quantity);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, CategoryDetailsActivity.class);
+                    intent.putExtra("CATEGORY_NAME", tvStockName.getText().toString());
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

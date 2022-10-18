@@ -1,6 +1,7 @@
 package com.delivce.managenyama.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.delivce.managenyama.R;
+import com.delivce.managenyama.ui.categories.CategoryDetailsActivity;
 
 import java.util.List;
 import java.util.Map;
@@ -54,6 +56,7 @@ public class MeatCategoriesAdapter extends RecyclerView.Adapter<MeatCategoriesAd
             super(itemView);
 
             tvCategoryName = itemView.findViewById(R.id.tv_item_category_name);
+
         }
     }
 }
