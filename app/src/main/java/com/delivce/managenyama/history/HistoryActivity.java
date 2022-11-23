@@ -105,7 +105,7 @@ public class HistoryActivity extends AppCompatActivity {
                             }
                             Log.d("CATEGORIES_LIST", String.valueOf(sales));
 
-                            salesAdapter = new SalesAdapter(HistoryActivity.this, sales);
+                            salesAdapter = new SalesAdapter(HistoryActivity.this, db, sales);
                             LinearLayoutManager layoutManager=new LinearLayoutManager(HistoryActivity.this, LinearLayoutManager.VERTICAL, false);
 
                             historyRV.setLayoutManager(layoutManager);

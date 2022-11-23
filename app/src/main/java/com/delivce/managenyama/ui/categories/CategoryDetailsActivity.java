@@ -2,6 +2,7 @@ package com.delivce.managenyama.ui.categories;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,8 +32,13 @@ import java.util.Map;
 public class CategoryDetailsActivity extends AppCompatActivity {
 
     private RecyclerView salesRV;
+    private CardView cvAlertLimit;
 
     public final String salesCollection = "meat_sales";
+    public final String stockCollection = "meat_stock";
+    public final String categoryCollection = "meat_categories";
+
+
     List<Map<String, Object>> sales = new ArrayList<>();
 
     FirebaseFirestore db;
@@ -57,6 +63,7 @@ public class CategoryDetailsActivity extends AppCompatActivity {
 
         Intent i = getIntent();
         category = i.getStringExtra("CATEGORY_NAME");
+        cvAlertLimit = findViewById(R.id.cv_alert_limit);
 
 
         btnAddStock.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +86,44 @@ public class CategoryDetailsActivity extends AppCompatActivity {
 
         sales.clear();
         fetchSales(category);
+        monitorStock(category);
+    }
+
+    private void monitorStock(String category) {
+        Toast.makeText(this, "Category:"+category, Toast.LENGTH_SHORT).show();
+
+        db.collection(categoryCollection)
+                .whereEqualTo("name", category)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        QuerySnapshot querySnapshot = task.getResult();
+
+                    }
+                });
+
+        db.collection(stockCollection)
+                .whereEqualTo("category", category)
+                .get()
+                
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        QuerySnapshot querySnapshot = task.getResult();
+                        for(QueryDocumentSnapshot queryDocumentSnapshot : querySnapshot){
+                            double quantity = queryDocumentSnapshot.getDouble("quantity");
+//                            double minLimit = queryDocumentSnapshot.getString("stock_minimum_limit");
+
+//                            if(minLimit >= quantity){
+//                                cvAlertLimit.setVisibility(View.VISIBLE);
+//                            }
+//                            else{
+//                                cvAlertLimit.setVisibility(View.GONE);
+//                            }
+                        }
+                    }
+                });
     }
 
     private void fetchSales(String category) {

@@ -138,7 +138,7 @@ public class SalesPopUp implements AdapterView.OnItemSelectedListener {
                         QuerySnapshot querySnapshot = task.getResult();
                         DocumentSnapshot documentSnapshot = querySnapshot.getDocuments().get(0);
 
-                        categoryPrice = (float) documentSnapshot.get("default_price");
+                        categoryPrice = 0;
                     }
                 });
         return categoryPrice;

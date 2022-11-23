@@ -57,6 +57,14 @@ public class MeatCategoriesAdapter extends RecyclerView.Adapter<MeatCategoriesAd
 
             tvCategoryName = itemView.findViewById(R.id.tv_item_category_name);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, CategoryDetailsActivity.class);
+                    intent.putExtra("CATEGORY_NAME", categoryName);
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

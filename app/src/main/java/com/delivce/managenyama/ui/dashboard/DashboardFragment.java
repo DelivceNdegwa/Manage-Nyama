@@ -177,7 +177,7 @@ public class DashboardFragment extends Fragment {
                             }
                             Log.d("SALES_LIST", String.valueOf(sales));
 
-                            salesAdapter = new SalesAdapter(requireActivity(), sales);
+                            salesAdapter = new SalesAdapter(requireActivity(), db, sales);
                             LinearLayoutManager layoutManager=new LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false);
 
                             historyRV.setLayoutManager(layoutManager);
